@@ -1,0 +1,15 @@
+package com.spring.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class LoginController {
+
+    @GetMapping("/showMyForm")
+    public String showMyLoginPage(Model model) {
+        model.addAttribute("name","eslam");
+        return "/view/userlogin";
+    }
+}
