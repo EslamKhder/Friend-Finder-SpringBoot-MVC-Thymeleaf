@@ -2,35 +2,33 @@ package com.spring.springsecurity.config;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.springsecurity.config.userdetailsconfigration.UserPrincipalDetailsService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	// add a reference to our security data source
-	
-	//@Autowired
-	//private DataSource securityDataSource;
-	
+	private UserPrincipalDetailsService userPrincipalDetailsService;
+
+	public DemoSecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService) {
+		this.userPrincipalDetailsService = userPrincipalDetailsService;
+	}
+
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-		// add our users for in memory authentication
-		
-		User.UserBuilder users = User.withDefaultPasswordEncoder();
-		
-		auth.inMemoryAuthentication()
-			.withUser(users.username("john").password("test123").roles("CLIENT"))
-			.withUser(users.username("mary").password("test123").roles("VISITOR"))
-			.withUser(users.username("susan").password("test123").roles("ADMIN"));
+	protected void configure(AuthenticationManagerBuilder auth) {
+		auth.authenticationProvider(authenticationProvider());
 	}
 
 /*	@Override
@@ -48,17 +46,28 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-		.antMatchers("/").hasRole("CLIENT")
-		.antMatchers("/leader/**").hasRole("VISITOR")
-		.antMatchers("/admin/**").hasRole("ADMIN")
+		.antMatchers("/home").permitAll()
 		.and()
 		.formLogin()
-		.loginPage("/showMyForm")
-		.loginProcessingUrl("/authenticateTheUser")
-		.permitAll()
+		.loginProcessingUrl("/signin")
+		.loginPage("/showMyForm").permitAll()
+		.usernameParameter("txtusername")
+		.passwordParameter("txtpassword")
 		.and()
-		.logout().permitAll()
-		.and()
-		.exceptionHandling().accessDeniedPage("/denied");
+		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/showMyForm");
+	}
+
+	@Bean
+	DaoAuthenticationProvider authenticationProvider(){
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+		daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
+
+		return daoAuthenticationProvider;
+	}
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }

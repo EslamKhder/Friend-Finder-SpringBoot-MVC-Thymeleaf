@@ -5,10 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LoginController {
+public class HomeController {
 
-    @GetMapping("/showMyForm")
+    @GetMapping("/home")
     public String showMyLoginPage(Model model) {
-        return "/view/userlogin";
+        return "/view/mainpage";
     }
 }
