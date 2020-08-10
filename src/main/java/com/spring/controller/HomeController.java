@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+    @GetMapping("/")
+    public String redirectPage(Model model) {
+        return "/view/index";
+    }
+
     @GetMapping("/home")
     public String showMyLoginPage(Model model) {
         return "/view/mainpage";

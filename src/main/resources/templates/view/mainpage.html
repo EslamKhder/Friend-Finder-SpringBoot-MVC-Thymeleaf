@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,9 +79,18 @@
                             <li><a href="timeline-album.html">Timeline Album</a></li>
                             <li><a href="timeline-friends.html">Timeline Friends</a></li>
                             <li><a href="contact.html">Contact Us</a></li>
+
+
                         </ul>
                     </li>
                     <li class="dropdown"><a href="contact.html">Contact</a></li>
+                    <li  class="dropdown">
+                        <form th:action="@{/logout}" method="POST">
+                            <button sec:authorize="isAuthenticated()" class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit">Logout</button>
+                            <button sec:authorize="isAnonymous()" th:href="@{~/userlogin}" class="btn btn-outline-info my-2 my-sm-0 btn-sm">Login</button>
+                        </form>
+
+                    </li>
                 </ul>
                 <form class="navbar-form navbar-right hidden-sm">
                     <div class="form-group">
@@ -103,7 +113,8 @@
             <div class="col-md-3 static">
                 <div class="profile-card">
                     <img src="images/users/user-1.jpg" alt="user" class="profile-photo" />
-                    <h5><a href="timeline.html" class="text-white">Sarah Cruiz</a></h5>
+                    <h5><a href="timeline.html" class="text-white" sec:authorize="isAuthenticated()" sec:authentication="name"></a></h5>
+                    <h5><a href="timeline.html" class="text-white" sec:authorize="isAuthenticated()" sec:authentication="principal.authorities"></a></h5>
                     <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
                 </div><!--profile card ends-->
                 <ul class="nav-news-feed">
