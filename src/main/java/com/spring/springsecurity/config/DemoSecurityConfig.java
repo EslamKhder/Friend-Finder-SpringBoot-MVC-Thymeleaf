@@ -2,6 +2,9 @@ package com.spring.springsecurity.config;
 
 import javax.sql.DataSource;
 
+import com.spring.dao.UserRepository;
+import com.spring.springsecurity.config.jwttoken.JwtAuthenticationFilter;
+import com.spring.springsecurity.config.jwttoken.JwtAuthorizationFilter;
 import com.spring.springsecurity.config.userdetailsconfigration.UserPrincipalDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +13,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -19,6 +23,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private UserPrincipalDetailsService userPrincipalDetailsService;
+	private UserRepository userRepository;
 
 	public DemoSecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService) {
 		this.userPrincipalDetailsService = userPrincipalDetailsService;
@@ -44,7 +49,14 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
+		http
+		.csrf().disable()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		// add jwt filters (1. authentication, 2. authorization)
+		.addFilter(new JwtAuthenticationFilter(authenticationManager()))
+		.addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
+		.authorizeRequests()
 		.antMatchers("/index").permitAll()
 		.and()
 		.formLogin()
@@ -54,6 +66,19 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		.passwordParameter("txtpassword")
 		.and()
 		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/userlogin");
+
+		/*http.authorizeRequests()
+		.antMatchers("/index").permitAll()
+		.and()
+		.formLogin()
+		.loginProcessingUrl("/signin")
+		.loginPage("/userlogin").permitAll()
+		.usernameParameter("txtusername")
+		.passwordParameter("txtpassword")
+		.and()
+		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/userlogin");
+
+		 */
 	}
 
 	@Bean
