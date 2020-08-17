@@ -11,4 +11,8 @@ public class LoginController {
     public String showMyLoginPage(Model model) {
         return "/view/userlogin";
     }
+    @GetMapping("/newaccount")
+    public String newAccount(Model model) {
+        return "/view/usernewaccount";
+    }
 }

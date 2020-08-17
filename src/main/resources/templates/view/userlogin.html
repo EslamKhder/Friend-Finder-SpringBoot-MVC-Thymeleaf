@@ -18,6 +18,14 @@
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'>
         <!--Favicon-->
         <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+        <style>
+            .user
+            {
+                font-size: 14px;
+                color: brown;
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
 
@@ -114,7 +122,7 @@
                         <div th:if="${param.logout}" class="alert alert-success">
                             You have been logged out.
                         </div>
-                        <form th:action="@{/signin}" method="POST">
+                        <form th:action="@{~/signin}" method="POST">
                             <fieldset class="form-group">
                                 <input type="text" required name="txtusername" class="form-control" id="example-email" placeholder="Enter email" autofocus>
                             </fieldset>
@@ -126,8 +134,11 @@
                                 <input type="checkbox" class="form-check-input" id="checkRememberMe" name="checkRememberMe">
                                 <label class="form-check-label" for="checkRememberMe">Remember me?</label>
                             </div>
+                            <a class="user" th:href="@{~/newaccount}">Create New Account</a>
                             <button class="btn-secondary">Log In</button>
+
                         </form>
+
 
 
                     </div>

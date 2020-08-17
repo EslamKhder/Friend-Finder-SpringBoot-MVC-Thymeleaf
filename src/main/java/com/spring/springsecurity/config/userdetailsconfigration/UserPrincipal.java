@@ -1,6 +1,7 @@
 package com.spring.springsecurity.config.userdetailsconfigration;
 
 import com.spring.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,28 +13,30 @@ import java.util.List;
 public class UserPrincipal implements UserDetails {
     private User user;
 
+    @Autowired
     public UserPrincipal(User user){
         this.user = user;
     }
 
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-
-        // Extract list of permissions (name)
-        this.user.getPermissionList().forEach(p -> {
-            GrantedAuthority authority = new SimpleGrantedAuthority(p);
-            authorities.add(authority);
-        });
-
         // Extract list of roles (ROLE_name)
-        this.user.getRoleList().forEach(r -> {
-            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r);
+            this.user.getRoles().forEach(r -> {
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r.getName());
             authorities.add(authority);
         });
-
         return authorities;
     }
+
+   /* @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        Set<Role> authorities;
+        authorities = user.getRoles();
+        return (Collection<? extends GrantedAuthority>) authorities;
+    }
+
+    */
 
     @Override
     public String getPassword() {
@@ -42,7 +45,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        return this.user.getEmail();
     }
 
     @Override
@@ -68,5 +71,8 @@ public class UserPrincipal implements UserDetails {
             return false;
         }
 
+    }
+    public String getAge(){
+        return this.user.getAge();
     }
 }
