@@ -112,21 +112,21 @@
                     <div class="line-divider"></div>
                     <div class="form-wrapper">
                         <p class="signup-text">Signup now and meet awesome people around the world</p>
-                        <form th:action="@{~/newaccount}" method="POST">
+                        <form th:action="@{~/register}" method="POST" th:object="${user}" >
                             <fieldset class="form-group">
-                                <input type="text" required name="fullname" class="form-control"  placeholder="Enter name" autofocus>
+                                <input th:field="*{userProprites.fullname}" type="text" required name="fullname" class="form-control"  placeholder="Enter name" autofocus>
                             </fieldset>
                             <fieldset class="form-group">
-                                <input type="email" required name="email" class="form-control"  placeholder="Enter email" >
+                                <input th:field="*{email}" type="email" required name="txtusername" class="form-control"  placeholder="Enter email" >
                             </fieldset>
                             <fieldset class="form-group">
-                                <input type="password" required name="password" class="form-control" placeholder="Enter a password">
+                                <input th:field="*{password}" type="password" required name="txtpassword" class="form-control" placeholder="Enter a password">
                             </fieldset>
                             <fieldset class="form-group">
-                                <input type="text" required name="age" class="form-control" placeholder="Enter your Age">
+                                <input th:field="*{userProprites.age}" type="text" required name="age" class="form-control" placeholder="Enter your Age">
                             </fieldset>
-                            <input type="radio" name="gender" value="male"><label>Male</label>
-                            <input type="radio" name="gender" value="female"><label>Female</label><br>
+                            <input th:field="*{userProprites.gender}" type="radio" name="gender" value="MALE"><label>Male</label>
+                            <input th:field="*{userProprites.gender}" type="radio" name="gender" value="FEMALE"><label>Female</label><br>
                             <button class="btn-secondary">Signup</button>
                         </form>
 

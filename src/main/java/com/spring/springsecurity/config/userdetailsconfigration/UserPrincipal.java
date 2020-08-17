@@ -72,7 +72,7 @@ public class UserPrincipal implements UserDetails {
         }
 
     }
-    public String getAge(){
-        return this.user.getAge();
+    public String getFullname(){
+        return this.user.getUserProprites().getFullname();
     }
 }

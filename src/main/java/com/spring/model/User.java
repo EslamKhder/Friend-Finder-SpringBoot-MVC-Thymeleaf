@@ -1,6 +1,5 @@
 package com.spring.model;
 
-import com.spring.enums.Gender;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -20,10 +19,9 @@ public class User {
 
     private int active;
 
-    private String age;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_proprites_id")
+    private UserProprites userProprites;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -68,22 +66,6 @@ public class User {
         this.active = active;
     }
 
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -91,19 +73,12 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-    /*
-    public List<String> getRoleList(){
-        if(this.roles.length() > 0){
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
+
+    public UserProprites getUserProprites() {
+        return userProprites;
     }
 
-    public List<String> getPermissionList(){
-        if(this.permissions.length() > 0){
-            return Arrays.asList(this.permissions.split(","));
-        }
-        return new ArrayList<>();
+    public void setUserProprites(UserProprites userProprites) {
+        this.userProprites = userProprites;
     }
-    */
 }

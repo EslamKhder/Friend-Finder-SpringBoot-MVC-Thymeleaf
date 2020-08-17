@@ -1,18 +1,28 @@
 package com.spring.controller;
 
+import com.spring.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LoginController {
 
-    @GetMapping("/userlogin")
-    public String showMyLoginPage(Model model) {
-        return "/view/userlogin";
+
+    /*@GetMapping("/mainprofile")
+    public String mainPage() {
+        return "view/mainpage";
     }
-    @GetMapping("/newaccount")
+     */
+
+    @GetMapping("/login")
+    public String showMyLoginPage() {
+        return "view/userlogin";
+    }
+    @GetMapping("/signup")
     public String newAccount(Model model) {
-        return "/view/usernewaccount";
+        model.addAttribute("user", new User());
+        return "view/usernewaccount";
     }
 }

@@ -5,6 +5,7 @@ import com.spring.dao.UserRepository;
 import com.spring.enums.Gender;
 import com.spring.model.Role;
 import com.spring.model.User;
+import com.spring.model.UserProprites;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,35 @@ public class DbInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+      /*
+       Role role1 = new Role();
+        role1.setId((long) 1);
+        //role1.setName("ADMIN");
+        Role role2 = new Role();
+        //role2.setName("CLIENT");
+        role2.setId((long) 2);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role1);
+        roles.add(role2);
+        //this.roleRepository.saveAll(roles);
+
+        User user0 = new User();
+        UserProprites userp0 = new UserProprites();
+
+        userp0.setFullname("Eslam Khder");
+        userp0.setAge("20");
+        userp0.setGender(Gender.MALE);
+        userp0.setImage("pro.jpg");
+        user0.setEmail("solom@eg.com");
+        user0.setPassword(passwordEncoder.encode("123456789"));
+        user0.setActive(1);
+        user0.setRoles(roles);
+        user0.setUserProprites(userp0);
+
+        this.userRepository.save(user0);
+
+       */
+
         /*
         // Delete all
         this.userRepository.deleteAll();
@@ -42,7 +72,7 @@ public class DbInit implements CommandLineRunner {
         this.roleRepository.saveAll(roles);
 
 
-       User user = new User();
+        User user = new User();
         user.setEmail("solomkhder@eg.com");
         user.setPassword(passwordEncoder.encode("123456789"));
         user.setGender(Gender.MALE);
@@ -80,9 +110,6 @@ public class DbInit implements CommandLineRunner {
 
         // Save to db
         this.userRepository.saveAll(users);
-
-
-
  */
 
     }

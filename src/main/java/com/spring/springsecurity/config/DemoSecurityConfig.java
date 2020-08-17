@@ -61,15 +61,15 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/userlogin");
 		*/
 		http.authorizeRequests()
-		.antMatchers("/index").permitAll()
+		.antMatchers("/home").permitAll()
 		.and()
 		.formLogin()
 		.loginProcessingUrl("/signin")
-		.loginPage("/userlogin").permitAll()
+		.loginPage("/login").permitAll()
 		.usernameParameter("txtusername")
 		.passwordParameter("txtpassword")
 		.and()
-		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/userlogin");
+		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 	}
 
 	@Bean
