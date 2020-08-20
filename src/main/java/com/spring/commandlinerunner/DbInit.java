@@ -5,13 +5,13 @@ import com.spring.dao.UserRepository;
 import com.spring.enums.Gender;
 import com.spring.model.Role;
 import com.spring.model.User;
-import com.spring.model.UserProprites;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class DbInit implements CommandLineRunner {
@@ -28,7 +28,22 @@ public class DbInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-      /*
+        /*
+        Role role1 = new Role();
+        role1.setId((long) 1);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role1);
+        User user0 = new User();
+        user0.setFullname("Eslam Khder");
+        user0.setAge("20");
+        user0.setGender(Gender.MALE);
+        user0.setImage("pro.jpg");
+        user0.setEmail("solom@eg.com");
+        user0.setPassword(passwordEncoder.encode("123456789"));
+        user0.setActive(1);
+        user0.setRoles(roles);
+        this.userRepository.save(user0);
+
        Role role1 = new Role();
         role1.setId((long) 1);
         //role1.setName("ADMIN");

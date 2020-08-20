@@ -18,12 +18,15 @@
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'>
         <!--Favicon-->
         <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
-        .user
-        {
-            font-size: 14px;
-            color: brown;
-            font-weight: bold;
-        }
+        <style>
+            .user,.error
+            {
+                font-size: 14px;
+                color: brown;
+                font-weight: bold;
+            }
+
+        </style>
     </head>
     <body>
 
@@ -112,21 +115,26 @@
                     <div class="line-divider"></div>
                     <div class="form-wrapper">
                         <p class="signup-text">Signup now and meet awesome people around the world</p>
-                        <form th:action="@{~/register}" method="POST" th:object="${user}" >
+                        <form th:action="@{~/register}" method="POST" th:object="${user}">
                             <fieldset class="form-group">
-                                <input th:field="*{userProprites.fullname}" type="text" required name="fullname" class="form-control"  placeholder="Enter name" autofocus>
+                                <input th:field="*{fullname}" type="text"class="form-control"  placeholder="Enter name" autofocus>
+                                <span class="error" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></span>
                             </fieldset>
                             <fieldset class="form-group">
-                                <input th:field="*{email}" type="email" required name="txtusername" class="form-control"  placeholder="Enter email" >
+                                <input th:field="*{email}" type="email" name="txtusername" class="form-control"  placeholder="Enter email" >
+                                <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                             </fieldset>
                             <fieldset class="form-group">
-                                <input th:field="*{password}" type="password" required name="txtpassword" class="form-control" placeholder="Enter a password">
+                                <input th:field="*{password}" type="password" name="txtpassword" class="form-control" placeholder="Enter a password">
+                                <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                             </fieldset>
                             <fieldset class="form-group">
-                                <input th:field="*{userProprites.age}" type="text" required name="age" class="form-control" placeholder="Enter your Age">
+                                <input th:field="*{age}" type="text" name="age" class="form-control" placeholder="Enter your Age">
+                                <span class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
                             </fieldset>
-                            <input th:field="*{userProprites.gender}" type="radio" name="gender" value="MALE"><label>Male</label>
-                            <input th:field="*{userProprites.gender}" type="radio" name="gender" value="FEMALE"><label>Female</label><br>
+                            <input th:field="*{gender}" type="radio" name="gender" value="MALE"><label>Male</label>
+                            <input th:field="*{gender}" type="radio" name="gender" value="FEMALE"><label>Female</label><br>
+                            <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
                             <button class="btn-secondary">Signup</button>
                         </form>
 

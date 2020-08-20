@@ -73,6 +73,6 @@ public class UserPrincipal implements UserDetails {
 
     }
     public String getFullname(){
-        return this.user.getUserProprites().getFullname();
+        return this.user.getFullname();
     }
 }
