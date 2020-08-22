@@ -61,6 +61,9 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private Set<Like> likes;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    private Set<Friend> friends;
+
 
 
     public User() {
