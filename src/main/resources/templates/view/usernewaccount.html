@@ -123,6 +123,7 @@
                             <fieldset class="form-group">
                                 <input th:field="*{email}" type="email" name="txtusername" class="form-control"  placeholder="Enter email" >
                                 <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                <span class="error" th:text="${existemail}"></span>
                             </fieldset>
                             <fieldset class="form-group">
                                 <input th:field="*{password}" type="password" name="txtpassword" class="form-control" placeholder="Enter a password">
@@ -135,8 +136,9 @@
                             <input th:field="*{gender}" type="radio" name="gender" value="MALE"><label>Male</label>
                             <input th:field="*{gender}" type="radio" name="gender" value="FEMALE"><label>Female</label><br>
                             <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
-                            <button class="btn-secondary">Signup</button>
+                            <button id="submit" class="btn-secondary">Signup</button>
                         </form>
+
 
                     </div>
                     <a th:href="@{~/userlogin}">Already have an account?</a>
@@ -395,6 +397,31 @@
         <script src="js/jquery.appear.min.js"></script>
         <script src="js/jquery.incremental-counter.js"></script>
         <script src="js/script.js"></script>
+        <script>
+            /*alert("63");
+            $("#submit").click(function(){
 
+            $.get("/register",function (data,status){
+                    alert("Data : " + data );
+                    alert("Status : " + status );
+                });
+                $.get("/register",function (data,status){
+                    alert("Data : " + data );
+                    alert("Status : " + status );
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: '/register',
+                    success: function (result){
+                        $('#res').text(result);
+                    }
+                });
+
+
+
+            });
+
+             */
+        </script>
     </body>
 </html>
