@@ -41,11 +41,8 @@ public class UserController {
     public String addUser(@Valid @ModelAttribute("user") User user,
                           BindingResult theBindingResult,
                           @RequestParam("imagepro") MultipartFile multipartFile,
-                          RedirectAttributes redirectAttributes,
-                          Errors error) throws IOException {
+                          RedirectAttributes redirectAttributes) throws IOException {
 
-
-        System.out.println(user.getImage());
         if (theBindingResult.hasErrors()) {
             return "view/usernewaccount";
         } else {
@@ -66,11 +63,14 @@ public class UserController {
                 ro.add(role);
                 user.setRoles(ro);
 
-                // copy image in local (your Computer)
-                Image.saveImage(multipartFile);
+                System.out.println(multipartFile.getOriginalFilename() + "   <-------");
+                if(!multipartFile.isEmpty()){
+                    // copy image in local (your Computer)
+                    Image.saveImage(multipartFile);
 
-                // set name of image in mosel User
-                user.setImage(multipartFile.getOriginalFilename());
+                    // set name of image in mosel User
+                    user.setImage(multipartFile.getOriginalFilename());
+                }
 
                 // save the user
                 userRepository.save(user);

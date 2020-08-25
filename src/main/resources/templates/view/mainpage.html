@@ -20,6 +20,14 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'>
     <!--Favicon-->
     <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+    <style>
+        .error
+        {
+            font-size: 20px;
+            color: brown;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -164,9 +172,41 @@
                                     <button class="btn btn-primary pull-right">Publish</button>
                                 </div>
                             </div>
+                            <span class="error" th:text="${emptypost}"></span>
                         </div>
                     </div><!-- Post Create Box End-->
                 </form>
+                <!-- Post Content
+                ================================================= -->
+                <div sec:authorize="isAnonymous()" class="post-content" th:each="po : ${posts}">
+                    <div th:switch="${po.image} != null">
+                        <img th:case="true" th:src="@{'~/photos/' + ${po.image}}" alt="post-image" class="img-responsive post-image" />
+                    </div>
+                    <div class="post-container">
+                        <img src="images/users/user-5.jpg" alt="user" class="profile-photo-md pull-left" />
+                        <div class="post-detail">
+                            <div class="user-info">
+                                <h5><a href="timeline.html" class="profile-link">Alexis Clark</a> <span class="following">following</span></h5>
+                                <p class="text-muted">Published a photo about 3 mins ago</p>
+                            </div>
+                            <div class="reaction">
+                                <a href="/login" class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
+                                <a href="/login" class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                            </div>
+                            <div class="line-divider"></div>
+                            <div class="post-text">
+                                <p th:text="${po.text}"></p>
+                            </div>
+                            <div class="line-divider"></div>
+                            <!--
+                            <div class="post-comment" th:each="comments : ${po.comments}>
+                                <img src="images/users/user-11.jpg" alt="" class="profile-photo-sm" />
+                                <p th:text="${comments.text}"><a th:text="${comments.user.fullname}" href="timeline.html" class="profile-link"></a><i class="em em-laughing"></i></p>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
 
             <!-- Newsfeed Common Side Bar Right
             ================================================= -->
