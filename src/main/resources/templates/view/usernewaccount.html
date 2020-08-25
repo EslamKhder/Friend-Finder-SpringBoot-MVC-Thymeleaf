@@ -115,7 +115,7 @@
                     <div class="line-divider"></div>
                     <div class="form-wrapper">
                         <p class="signup-text">Signup now and meet awesome people around the world</p>
-                        <form th:action="@{~/register}" method="POST" th:object="${user}">
+                        <form th:action="@{~/register}" method="POST" enctype="multipart/form-data" th:object="${user}">
                             <fieldset class="form-group">
                                 <input th:field="*{fullname}" type="text"class="form-control"  placeholder="Enter name" autofocus>
                                 <span class="error" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></span>
@@ -133,12 +133,14 @@
                                 <input th:field="*{age}" type="text" name="age" class="form-control" placeholder="Enter your Age">
                                 <span class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
                             </fieldset>
+                            <fieldset class="form-group">
+                                <input name="imagepro" type="file" class="form-control" placeholder="your image">
+                            </fieldset>
                             <input th:field="*{gender}" type="radio" name="gender" value="MALE"><label>Male</label>
                             <input th:field="*{gender}" type="radio" name="gender" value="FEMALE"><label>Female</label><br>
                             <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
                             <button id="submit" class="btn-secondary">Signup</button>
                         </form>
-
 
                     </div>
                     <a th:href="@{~/userlogin}">Already have an account?</a>

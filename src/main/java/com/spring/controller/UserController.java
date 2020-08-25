@@ -3,19 +3,19 @@ package com.spring.controller;
 import com.spring.dao.UserRepository;
 import com.spring.model.Role;
 import com.spring.model.User;
+import com.spring.util.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,10 +39,14 @@ public class UserController {
 
     @PostMapping("/register")
     public String addUser(@Valid @ModelAttribute("user") User user,
-                          BindingResult theBindingResult, Errors error, RedirectAttributes redirectAttributes) {
+                          BindingResult theBindingResult,
+                          @RequestParam("imagepro") MultipartFile multipartFile,
+                          RedirectAttributes redirectAttributes,
+                          Errors error) throws IOException {
 
+
+        System.out.println(user.getImage());
         if (theBindingResult.hasErrors()) {
-            error.reject("existemail", "Email is Exist");
             return "view/usernewaccount";
         } else {
             if (userRepository.findByEmail(user.getEmail()) != null) {
@@ -61,6 +65,12 @@ public class UserController {
                 Set<Role> ro = new HashSet<>();
                 ro.add(role);
                 user.setRoles(ro);
+
+                // copy image in local (your Computer)
+                Image.saveImage(multipartFile);
+
+                // set name of image in mosel User
+                user.setImage(multipartFile.getOriginalFilename());
 
                 // save the user
                 userRepository.save(user);

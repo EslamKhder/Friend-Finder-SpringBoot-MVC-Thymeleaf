@@ -28,16 +28,6 @@ public class UserPrincipal implements UserDetails {
         return authorities;
     }
 
-   /* @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        Set<Role> authorities;
-        authorities = user.getRoles();
-        return (Collection<? extends GrantedAuthority>) authorities;
-    }
-
-    */
-
     @Override
     public String getPassword() {
         return this.user.getPassword();
@@ -75,4 +65,12 @@ public class UserPrincipal implements UserDetails {
     public String getFullname(){
         return this.user.getFullname();
     }
+    public String getImage(){
+        return this.user.getImage();
+    }
+    public long getId(){
+        return this.user.getId();
+    }
+
+
 }

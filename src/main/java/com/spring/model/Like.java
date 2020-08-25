@@ -1,8 +1,10 @@
 package com.spring.model;
 
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "likes")
 public class Like {
 
     @Id
@@ -10,11 +12,11 @@ public class Like {
     private long id;
 
     @ManyToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.LAZY)
-    @JoinColumn(name = "iduser")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.LAZY)
-    @JoinColumn(name = "idpost")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     public Like() {
@@ -43,6 +45,5 @@ public class Like {
     public void setPost(Post post) {
         this.post = post;
     }
-
 
 }

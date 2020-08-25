@@ -30,10 +30,6 @@ public class User {
     @NotEmpty(message = "requried")
     private String fullname;
 
-    /*@NotEmpty(message = "requried")
-    @Length(min = 2,max = 2)
-    @NumberFormat(style = NumberFormat.Style.NUMBER)
-     */
     @NotEmpty(message = "requried")
     @Pattern(regexp = "^(0|[1-9][0-9]*)$",message = "must include only number")
     private String age;
@@ -65,8 +61,11 @@ public class User {
     private Set<Friend> friends;
 
 
-
     public User() {
+    }
+
+    public User(long id) {
+        this.id = id;
     }
 
     public long getId() {
@@ -164,4 +163,13 @@ public class User {
     public void setLikes(Set<Like> likes) {
         this.likes = likes;
     }
+
+    public Set<Friend> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<Friend> friends) {
+        this.friends = friends;
+    }
+
 }
