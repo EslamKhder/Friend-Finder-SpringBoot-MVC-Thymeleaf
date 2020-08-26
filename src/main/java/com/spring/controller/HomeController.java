@@ -1,5 +1,6 @@
 package com.spring.controller;
 
+import com.spring.dao.CommentRepository;
 import com.spring.dao.PostRepository;
 import com.spring.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +14,23 @@ import java.util.List;
 public class HomeController {
 
     private PostRepository postRepository;
-
+    private CommentRepository commentRepository;
 
     @Autowired
-    public HomeController(PostRepository postRepository) {
+    public HomeController(PostRepository postRepository, CommentRepository commentRepository) {
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
     }
 
     @GetMapping("/")
     public String mainPage(Model model) {
         return "/view/index";
     }
+
     @GetMapping("/home")
     public String showMyPage(Model model) {
         model.addAttribute("posts",postRepository.findAll());
+        model.addAttribute("comments",commentRepository.findAll());
         model.addAttribute("post", new Post());
         return "/view/mainpage";
     }

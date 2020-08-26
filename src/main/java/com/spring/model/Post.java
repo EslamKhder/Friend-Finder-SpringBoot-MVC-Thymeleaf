@@ -16,14 +16,14 @@ public class Post {
 
     private String image;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "post")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "post")
     private Set<Comment> comments;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "post")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "post")
     private Set<Like> likes;
 
     public Post() {

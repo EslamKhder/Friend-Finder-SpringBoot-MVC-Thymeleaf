@@ -48,16 +48,16 @@ public class User {
     )
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
     private Set<Post> posts;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
     private Set<Comment> comments;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
     private Set<Like> likes;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
     private Set<Friend> friends;
 
 
