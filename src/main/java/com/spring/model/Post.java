@@ -16,6 +16,11 @@ public class Post {
 
     private String image;
 
+
+    private int love;
+
+    private int dislike;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
@@ -53,6 +58,22 @@ public class Post {
         this.image = image;
     }
 
+    public int getLove() {
+        return love;
+    }
+
+    public void setLove(int love) {
+        this.love = love;
+    }
+
+    public int getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(int dislike) {
+        this.dislike = dislike;
+    }
+
     public User getUser() {
         return user;
     }
@@ -76,5 +97,4 @@ public class Post {
     public void setLikes(Set<Like> likes) {
         this.likes = likes;
     }
-
 }

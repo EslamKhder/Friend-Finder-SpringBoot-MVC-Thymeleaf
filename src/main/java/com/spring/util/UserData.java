@@ -8,4 +8,22 @@ public class UserData {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ((UserPrincipal) principal).getId();
     }
+
+    public static String userImage(){
+        try{
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String image = ((UserPrincipal) principal).getImage();
+            return image;
+        } catch (Exception e){
+            return "default";
+        }
+
+    }
+    public static boolean isConnected(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal == null) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -10,7 +10,7 @@ public class Friend {
 
     private long friendid;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

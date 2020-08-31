@@ -125,7 +125,7 @@
             ================================================= -->
             <div class="col-md-3 static">
                 <div sec:authorize="isAuthenticated()" class="profile-card">
-                    <img src="images/users/user-1.jpg" alt="user" class="profile-photo" />
+                    <img th:src="@{'~/photos/' + ${imageprofile}}" alt="user" class="profile-photo" />
                     <h5><a href="timeline.html" class="text-white" sec:authentication="principal.fullname"></a></h5>
                     <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
                 </div><!--profile card ends-->
@@ -181,7 +181,8 @@
                         </div>
                     </div><!-- Post Create Box End-->
                 </form>
-                <!-- Post Content
+
+                <!-- Post Content isAnonymous
                 ================================================= -->
                 <div sec:authorize="isAnonymous()" class="post-content" th:each="po : ${posts}">
                     <div th:switch="${po.image} != null">
@@ -197,8 +198,8 @@
                                 <p class="text-muted">Published a photo about 3 mins ago</p>
                             </div>
                             <div class="reaction">
-                                <a href="/login" class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
-                                <a href="/login" class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                                <a href="/login" class="btn text-green" th:text="${po.love}"><i class="icon ion-thumbsup"></i></a>
+                                <a href="/login" class="btn text-red" th:text="${po.dislike}"><i class="fa fa-thumbs-down"></i> 0</a>
                             </div>
                             <div class="line-divider"></div>
                             <div class="post-text">
@@ -220,6 +221,44 @@
                     </div>
                 </div>
 
+                <!-- Post Content isAuthenticated
+                ================================================= -->
+                <div sec:authorize="isAuthenticated()" class="post-content" th:each="po : ${posts}">
+                    <div th:switch="${po.image} != null">
+                        <img th:case="true" th:src="@{'~/photos/' + ${po.image}}" alt="post-image" class="img-responsive post-image" />
+                    </div>
+                    <div class="post-container">
+                        <div th:switch="${po.user.image} != null">
+                            <img th:src="@{'~/photos/' + ${po.user.image}}" alt="user" class="profile-photo-md pull-left" />
+                        </div>
+                        <div class="post-detail">
+                            <div class="user-info">
+                                <h5><a href="" th:text="${po.user.fullname}" class="profile-link"></a> <span class="following">following</span></h5>
+                                <p class="text-muted">Published a photo about 3 mins ago</p>
+                            </div>
+                            <div class="reaction">
+                                <a href="/login" class="btn text-green" th:text="${po.love}><i class="icon ion-thumbsup"></i> 13</a>
+                                <a href="/login" class="btn text-red" th:text="${po.dislike}><i class="fa fa-thumbs-down"></i> 0</a>
+                            </div>
+                            <div class="line-divider"></div>
+                            <div class="post-text">
+                                <p th:text="${po.text}"></p>
+                            </div>
+                            <div class="line-divider"></div>
+                            <div class="post-comment">
+                                <div th:each="com : ${comments}">
+                                    <div th:switch="${com.post.id == po.id}">
+                                        <div th:case="true" >
+                                            <img th:src="@{'~/photos/' + ${com.user.image}}" alt="" class="profile-photo-sm" />
+                                            <a th:text="${com.user.fullname}" href="timeline.html" class="profile-link"></a>
+                                            <span class="" th:text="${com.text}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <!-- Newsfeed Common Side Bar Right
             ================================================= -->
             <div class="col-md-2 static">

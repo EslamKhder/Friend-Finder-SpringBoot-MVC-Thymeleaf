@@ -72,5 +72,4 @@ public class UserPrincipal implements UserDetails {
         return this.user.getId();
     }
 
-
 }
