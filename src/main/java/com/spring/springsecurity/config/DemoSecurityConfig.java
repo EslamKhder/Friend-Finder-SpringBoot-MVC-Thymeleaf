@@ -63,6 +63,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/home").permitAll()
 		.and()
+		.csrf().disable()
 		.formLogin()
 		.loginProcessingUrl("/signin")
 		.loginPage("/login").permitAll()

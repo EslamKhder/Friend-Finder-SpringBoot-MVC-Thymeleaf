@@ -1,7 +1,7 @@
 package com.spring.model;
 
 
-import com.spring.enums.Gender;
+import com.spring.model.enums.Gender;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Set;

@@ -21,6 +21,10 @@ public class Like {
     public Like() {
     }
 
+    public Like(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

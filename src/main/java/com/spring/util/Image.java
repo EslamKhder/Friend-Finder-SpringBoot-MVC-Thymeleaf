@@ -10,8 +10,7 @@ import java.nio.file.Paths;
 public class Image {
 
     public static void saveImage(MultipartFile multipartFile) throws IOException {
-        //String folder = "E:\\BootProject\\Friend-Finder-SpringBoot-MVC-Thymeleaf\\src\\main\\resources\\static\\photos\\";
-        String folder = "C:\\photos";
+        String folder = "D:\\Friend-Finder-SpringBoot-MVC-Thymeleaf\\target\\classes\\static\\photos\\";
         byte[] bytes = multipartFile.getBytes();
         Path path = Paths.get(folder + multipartFile.getOriginalFilename());
         Files.write(path,bytes);

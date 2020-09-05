@@ -34,6 +34,10 @@ public class Post {
     public Post() {
     }
 
+    public Post(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

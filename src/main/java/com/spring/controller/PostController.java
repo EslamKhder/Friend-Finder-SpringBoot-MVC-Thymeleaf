@@ -46,4 +46,5 @@ public class PostController {
             return "redirect:/home";
         }
     }
+
 }

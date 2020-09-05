@@ -2,16 +2,10 @@ package com.spring.commandlinerunner;
 
 import com.spring.dao.RoleRepository;
 import com.spring.dao.UserRepository;
-import com.spring.enums.Gender;
-import com.spring.model.Role;
-import com.spring.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class DbInit implements CommandLineRunner {
