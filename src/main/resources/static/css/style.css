@@ -50,7 +50,6 @@ html, body {
 body{
 	font-family: 'Raleway', sans-serif;
 	color: #6d6e71;
-	font-size: 12px;
 }
 
 
@@ -1926,3 +1925,25 @@ ul.contact li i{
   z-index: 9999999;
 }
 /**********************/
+.error
+{
+  font-size: 20px;
+  color: brown;
+  font-weight: bold;
+}
+.comment {
+  margin-left: 5px;
+  font-size: 15px;
+  color: brown;
+}
+.post-content .post-container .post-detail .post-comment {
+  display: flex;
+}
+.newposttext i ,
+.post-comment span
+{
+  margin-left: 20px;
+  font-weight: bolder;
+  font-size: larger;
+  font-family: sans-serif;
+}

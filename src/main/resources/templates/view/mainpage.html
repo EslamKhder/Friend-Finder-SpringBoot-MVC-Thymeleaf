@@ -20,19 +20,7 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700' rel='stylesheet' type='text/css'>
     <!--Favicon-->
     <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
-    <style>
-        .error
-        {
-            font-size: 20px;
-            color: brown;
-            font-weight: bold;
-        }
-        .comment {
-            margin-left: 5px;
-            font-size: 15px;
-            color: brown;
-        }
-    </style>
+
 </head>
 <body>
 
@@ -125,7 +113,10 @@
             ================================================= -->
             <div class="col-md-3 static">
                 <div sec:authorize="isAuthenticated()" class="profile-card">
-                    <img th:src="@{'~/photos/' + ${imageprofile}}" alt="user" class="profile-photo" />
+                    <div th:switch="${imageprofile == null}">
+                        <img th:case="true" src="photos/default.png" alt="user" class="profile-photo" />
+                        <img th:case="false" th:src="@{'~/photos/' + ${imageprofile}}" alt="user" class="profile-photo" />
+                    </div>
                     <h5><a href="timeline.html" class="text-white" sec:authentication="principal.fullname"></a></h5>
                     <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
                 </div><!--profile card ends-->
@@ -206,7 +197,7 @@
                             </div>
                             <div class="line-divider"></div>
                             <div class="post-comment">
-                                <div th:each="com : ${comments}">
+                                <div class="commentst" th:each="com : ${comments}">
                                     <div th:switch="${com.post.id == po.id}">
                                         <div th:case="true" >
                                             <img th:src="@{'~/photos/' + ${com.user.image}}" alt="" class="profile-photo-sm" />
@@ -243,24 +234,21 @@
                                 <p th:text="${po.text}"></p>
                             </div>
                             <div class="line-divider"></div>
-                            <div class="post-comment">
-                                <div th:each="com : ${comments}">
-                                    <div th:switch="${com.post.id == po.id}">
-                                        <div th:case="true" >
-                                            <img th:src="@{'~/photos/' + ${com.user.image}}" alt="" class="profile-photo-sm" />
-                                            <a th:text="${com.user.fullname}" href="timeline.html" class="profile-link"></a>
-                                            <span class="" th:text="${com.text}"></span>
-                                        </div>
+                            <div class="post-comment" th:each="com : ${comments}" th:switch="${com.post.id == po.id}" th:case="true">
+                                    <div class="commentst" >
+                                        <img th:src="@{'~/photos/' + ${com.user.image}}" alt="" class="profile-photo-sm" />
+                                        <a th:text="${com.user.fullname}" href="timeline.html" class="profile-link"></a>
+                                        <span th:text="${com.text}"></span>
                                     </div>
-                                </div>
                             </div>
-                            <form>
-                                <div class="post-comment">
-                                    <img th:src="@{'~/photos/' + ${po.user.image}}" alt="" class="profile-photo-sm" />
-                                    <input type="text" class="form-control" placeholder="Write Comment" />
-                                    <div></div>
-                                </div>
-                            </form>
+                            <div class="newposttext" th:id="|post-text${po.id}|"></div>
+                            <div class="post-comment">
+                                <img th:src="@{'~/photos/' + ${po.user.image}}" alt="" class="profile-photo-sm" />
+                                <input type="text" th:id="|comment${po.id}|" class="form-control" placeholder="Write Comment" />
+                                <div th:id="|invalid${po.id}|"></div>
+                                <button th:attr="onclick=|sendComment('${po.user.fullname}',${po.id},'${po.user.image}')|"> Done </button>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -387,6 +375,7 @@
 <script src="js/jquery.sticky-kit.min.js"></script>
 <script src="js/jquery.scrollbar.min.js"></script>
 <script src="js/ajaxlike.js"></script>
+<script src="js/ajaxcomment.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>
