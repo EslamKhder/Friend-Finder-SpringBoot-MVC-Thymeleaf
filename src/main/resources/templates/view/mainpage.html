@@ -113,9 +113,9 @@
             ================================================= -->
             <div class="col-md-3 static">
                 <div sec:authorize="isAuthenticated()" class="profile-card">
-                    <div th:switch="${imageprofile == null}">
-                        <img th:case="true" src="photos/default.png" alt="user" class="profile-photo" />
-                        <img th:case="false" th:src="@{'~/photos/' + ${imageprofile}}" alt="user" class="profile-photo" />
+                    <div th:switch="${imageprofile} != null">
+                        <img th:case="true" th:src="@{'~/photos/' + ${imageprofile}}" alt="user" class="profile-photo-md pull-left" />
+                        <img th:case="false" src="photos/default.jpg" alt="user" class="profile-photo-md pull-left" />
                     </div>
                     <h5><a href="timeline.html" class="text-white" sec:authentication="principal.fullname"></a></h5>
                     <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
@@ -181,7 +181,8 @@
                     </div>
                     <div class="post-container">
                         <div th:switch="${po.user.image} != null">
-                            <img th:src="@{'~/photos/' + ${po.user.image}}" alt="user" class="profile-photo-md pull-left" />
+                            <img th:case="true" th:src="@{'~/photos/' + ${po.user.image}}" alt="user" class="profile-photo-md pull-left" />
+                            <img th:case="false" src="photos/default.jpg" alt="user" class="profile-photo-md pull-left" />
                         </div>
                         <div class="post-detail">
                             <div class="user-info">
@@ -196,16 +197,13 @@
                                 <p th:text="${po.text}"></p>
                             </div>
                             <div class="line-divider"></div>
-                            <div class="post-comment">
-                                <div class="commentst" th:each="com : ${comments}">
-                                    <div th:switch="${com.post.id == po.id}">
-                                        <div th:case="true" >
-                                            <img th:src="@{'~/photos/' + ${com.user.image}}" alt="" class="profile-photo-sm" />
-                                            <a th:text="${com.user.fullname}" href="timeline.html" class="profile-link"></a>
-                                            <span class="" th:text="${com.text}"></span>
-                                        </div>
+                            <div class="commentst" th:each="com : ${comments}"  th:switch="${com.post.id == po.id}" th:case="true" >
+                                    <div th:switch="${com.user.image} != null">
+                                        <img th:case="true" th:src="@{'~/photos/' + ${com.user.image}}" alt="" class="profile-photo-sm" />
+                                        <img th:case="false" src="photos/default.jpg" alt="" class="profile-photo-sm" />
+                                        <a th:text="${com.user.fullname}" href="timeline.html" class="profile-link"></a>
+                                        <span class="" th:text="${com.text}"></span>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -213,13 +211,14 @@
 
                 <!-- Post Content isAuthenticated
                 ================================================= -->
-                <div sec:authorize="isAuthenticated()" class="post-content" th:each="po : ${posts}">
+                <div sec:authorize="isAuthenticated()" class="post-content" th:each="po : ${myposts}">
                     <div th:switch="${po.image} != null">
                         <img th:case="true" th:src="@{'~/photos/' + ${po.image}}" alt="post-image" class="img-responsive post-image" />
                     </div>
                     <div class="post-container">
                         <div th:switch="${po.user.image} != null">
-                            <img th:src="@{'~/photos/' + ${po.user.image}}" alt="user" class="profile-photo-md pull-left" />
+                            <img th:case="true" th:src="@{'~/photos/' + ${po.user.image}}" alt="user" class="profile-photo-md pull-left" />
+                            <img th:case="false" src="photos/default.jpg" alt="user" class="profile-photo-md pull-left" />
                         </div>
                         <div class="post-detail">
                             <div class="user-info">
@@ -234,19 +233,28 @@
                                 <p th:text="${po.text}"></p>
                             </div>
                             <div class="line-divider"></div>
-                            <div class="post-comment" th:each="com : ${comments}" th:switch="${com.post.id == po.id}" th:case="true">
+                            <div class="post-comment postano" th:each="com : ${comments}" th:switch="${com.post.id == po.id}" th:case="true">
                                     <div class="commentst" >
-                                        <img th:src="@{'~/photos/' + ${com.user.image}}" alt="" class="profile-photo-sm" />
+                                        <div class="imgcom"  th:switch="${com.user.image} != null">
+                                            <img th:case="true" th:src="@{'~/photos/' + ${com.user.image}}" alt="user" class="profile-photo-md pull-left" />
+                                            <img th:case="false" src="photos/default.jpg" alt="user" class="profile-photo-md pull-left" />
+                                        </div>
                                         <a th:text="${com.user.fullname}" href="timeline.html" class="profile-link"></a>
                                         <span th:text="${com.text}"></span>
                                     </div>
                             </div>
                             <div class="newposttext" th:id="|post-text${po.id}|"></div>
                             <div class="post-comment">
-                                <img th:src="@{'~/photos/' + ${po.user.image}}" alt="" class="profile-photo-sm" />
+                                <span th:switch="${imageprofile} != null">
+                                    <img th:case="true" th:src="@{'~/photos/' + ${imageprofile}}" alt="user" class="profile-photo-md pull-left" />
+                                    <img th:case="false" src="photos/default.jpg" alt="user" class="profile-photo-md pull-left" />
+                                </span>
                                 <input type="text" th:id="|comment${po.id}|" class="form-control" placeholder="Write Comment" />
                                 <div th:id="|invalid${po.id}|"></div>
-                                <button th:attr="onclick=|sendComment('${po.user.fullname}',${po.id},'${po.user.image}')|"> Done </button>
+                                <div th:switch="${imageprofile} != null">
+                                    <button th:case="true" th:attr="onclick=|sendComment('${po.user.fullname}',${po.id},'${imageprofile}')|"> Done </button>
+                                    <button th:case="false" th:attr="onclick=|sendComment('${po.user.fullname}',${po.id},'default.jpg')|"> Done </button>
+                                </div>
 
                             </div>
                         </div>

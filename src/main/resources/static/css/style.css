@@ -1947,3 +1947,7 @@ ul.contact li i{
   font-size: larger;
   font-family: sans-serif;
 }
+.imgcom
+{
+  display: contents;
+}

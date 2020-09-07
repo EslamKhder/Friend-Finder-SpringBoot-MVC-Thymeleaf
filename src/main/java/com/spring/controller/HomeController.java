@@ -3,6 +3,7 @@ package com.spring.controller;
 import com.spring.dao.CommentRepository;
 import com.spring.dao.PostRepository;
 import com.spring.model.Post;
+import com.spring.model.User;
 import com.spring.util.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,9 @@ public class HomeController {
     @GetMapping("/home")
     public String showMyPage(Model model) {
         model.addAttribute("posts",postRepository.findAll());
+        if(UserData.isConnected()){
+            model.addAttribute("myposts",postRepository.findByUser(new User(UserData.userId())));
+        }
         model.addAttribute("comments",commentRepository.findAll());
 
         model.addAttribute("imageprofile", UserData.userImage());

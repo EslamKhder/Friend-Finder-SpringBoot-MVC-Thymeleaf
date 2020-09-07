@@ -15,15 +15,16 @@ public class UserData {
             String image = ((UserPrincipal) principal).getImage();
             return image;
         } catch (Exception e){
-            return "default";
+            return "default.png";
         }
-
     }
     public static boolean isConnected(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal == null) {
+
+        if (principal instanceof  UserPrincipal) {
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 }
