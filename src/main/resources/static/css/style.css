@@ -1966,3 +1966,8 @@ img.profile-photo-sm
 {
   margin-bottom: 8px;
 }
+.spblock
+{
+  display: block;
+  margin-bottom: 22px;
+}
