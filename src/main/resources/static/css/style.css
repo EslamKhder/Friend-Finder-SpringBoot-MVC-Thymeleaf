@@ -827,7 +827,7 @@ ul.online-users li span.online-dot{
 }
 
 .follow-user{
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .follow-user div{
@@ -1660,6 +1660,7 @@ ul.contact li i{
   #features .item{margin-bottom: 20px;}
 
   .timeline #page-contents{margin-top: 185px !important;}
+
 }
 
 
@@ -1950,4 +1951,18 @@ ul.contact li i{
 .imgcom
 {
   display: contents;
+}
+
+
+.friendano
+{
+  width: 30.666667%;
+}
+.friendano a
+{
+  padding-left: 30px;
+}
+img.profile-photo-sm
+{
+  margin-bottom: 8px;
 }
