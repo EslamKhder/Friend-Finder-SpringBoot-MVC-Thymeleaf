@@ -50,7 +50,8 @@ public class HomeController {
             users = userRepository.findAll();
             friends = friendRepository.findByUser(new User(UserData.userId()));
 
-            users = users.parallelStream().filter(x -> x.getId() != UserData.userId()).collect(Collectors.toList());
+            long userid =  UserData.userId();
+            users = users.parallelStream().filter(x -> x.getId() != userid).collect(Collectors.toList());
             if(!friends.isEmpty()){
                 for (int i = 0; i< friends.size(); i++){
                     int finalI = i;

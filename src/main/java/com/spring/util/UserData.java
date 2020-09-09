@@ -4,7 +4,8 @@ import com.spring.springsecurity.config.userdetailsconfigration.UserPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class UserData {
-    public static long userId(){
+
+    public static long userId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ((UserPrincipal) principal).getId();
     }
@@ -15,7 +16,7 @@ public class UserData {
             String image = ((UserPrincipal) principal).getImage();
             return image;
         } catch (Exception e){
-            return "default.png";
+            return null;
         }
     }
     public static boolean isConnected(){
