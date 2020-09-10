@@ -14,7 +14,7 @@ function sendComment(x,z,image)
     }
     try
     {
-        request.onreadystatechange = getInfocomment;
+        request.onreadystatechange = getcommentInfo;
         request.open("POST", url, true);
         request.setRequestHeader("Accept", "application/json");
         request.setRequestHeader("Content-Type", "application/json");
@@ -29,7 +29,7 @@ function sendComment(x,z,image)
         alert("Unable to connect to server");
     }
 }
-function getInfocomment() {
+function getcommentInfo() {
     if (this.readyState === 4 && this.status === 200) {
         var val = this.responseText;
         if (val === "invalid") {
@@ -57,7 +57,6 @@ function getInfocomment() {
             document.getElementById("comment"+id).value = "";
         }
     }
-
 }
 function clear(x) {
     setTimeout(function () {

@@ -1971,3 +1971,7 @@ img.profile-photo-sm
   display: block;
   margin-bottom: 22px;
 }
+.spblock a
+{
+  cursor: pointer;
+}

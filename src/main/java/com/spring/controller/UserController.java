@@ -63,7 +63,6 @@ public class UserController {
                 ro.add(role);
                 user.setRoles(ro);
 
-                System.out.println(multipartFile.getOriginalFilename() + "   <-------");
                 if(!multipartFile.isEmpty()){
                     // copy image in local (your Computer)
                     Image.saveImage(multipartFile);

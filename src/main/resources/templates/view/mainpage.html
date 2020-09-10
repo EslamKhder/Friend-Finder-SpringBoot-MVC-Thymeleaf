@@ -265,7 +265,6 @@
             <div sec:authorize="isAuthenticated()" class="col-md-2 static friendano">
                 <div class="suggestions" id="sticky-sidebar">
                     <h4 class="grey">Who to Follow</h4>
-
                         <span class="spblock" th:each="fr : ${myfriends}" th:id="|friend${fr.id}|">
                                 <span th:switch="${fr.image} != null">
                                     <img th:case="true" th:src="@{'~/photos/' + ${fr.image}}" alt="user" class="profile-photo-md pull-left" />
@@ -273,7 +272,7 @@
                                 </span>
                                 <div>
                                     <h5><a href="/login" th:text="${fr.fullname}"></a></h5>
-                                    <a th:onclick="|addFriend(${fr.id})|" class="text-green">Add friend</a>
+                                    <a th:onclick="|addFriend(${fr.id})|" class="text-green">Follow</a>
                                 </div>
                         </span>
                 </div>
@@ -292,7 +291,7 @@
                     </span>
                         <div>
                             <h5><a href="/login" th:text="${us.fullname}"></a></h5>
-                            <a href="/login" class="text-green">Add friend</a>
+                            <a href="/login" class="text-green">Follow</a>
                         </div>
                     </div>
                 </div>
