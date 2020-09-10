@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,12 @@ public class HomeController {
     private CommentRepository commentRepository;
     private FriendRepository friendRepository;
     private UserRepository userRepository;
+
+    private List<User> users;
+    private List<Friend> friends;
+    private List<Post> posts;
+    private int counter;
+    private long userid;
 
     @Autowired
     public HomeController(PostRepository postRepository, CommentRepository commentRepository, FriendRepository friendRepository, UserRepository userRepository) {
@@ -40,31 +47,46 @@ public class HomeController {
 
     @GetMapping("/home")
     public String showMyPage(Model model) {
-        List<User> users;
-        List<Friend> friends;
-        model.addAttribute("posts",postRepository.findAll());
+        posts = postRepository.findAll();
+        users = userRepository.findAll();
+
         if(UserData.isConnected()){
-            List<Post> posts = postRepository.findByUser(new User(UserData.userId()));
-            Collections.reverse(posts);
-            model.addAttribute("myposts",posts);
-            users = userRepository.findAll();
+
+            model.addAttribute("post", new Post());
+
+            model.addAttribute("imageprofile", UserData.userImage());
+
+            userid =  UserData.userId();
             friends = friendRepository.findByUser(new User(UserData.userId()));
 
-            long userid =  UserData.userId();
             users = users.parallelStream().filter(x -> x.getId() != userid).collect(Collectors.toList());
             if(!friends.isEmpty()){
-                for (int i = 0; i< friends.size(); i++){
-                    int finalI = i;
-                    users = users.parallelStream().filter(x -> x.getId() != friends.get(finalI).getFriendid())
+                List<Post> myposts = new ArrayList<>();
+                for (counter = 0; counter< friends.size(); counter++) {
+
+                    users = users.parallelStream().filter(x -> x.getId() != friends.get(counter).getFriendid())
                                                   .collect(Collectors.toList());
+
+
+                    myposts.addAll(posts.parallelStream().filter((x -> x.getUser().getId() == friends.get(counter).getFriendid() &&
+                            friends.get(counter).getUser().getId() == userid))
+                            .collect(Collectors.toList()));
+                    myposts.addAll(posts.parallelStream().filter(x -> x.getUser().getId() == userid).collect(Collectors.toList()));
                 }
+                Collections.reverse(myposts);
+                model.addAttribute("myposts",myposts);
+            } else {
+                posts = postRepository.findByUser(new User(UserData.userId()));
+                Collections.reverse(posts);
+                model.addAttribute("myposts",posts);
             }
             model.addAttribute("myfriends",users);
+
+        } else {
+            model.addAttribute("posts",posts);
+            model.addAttribute("users",users);
         }
         model.addAttribute("comments",commentRepository.findAll());
-        model.addAttribute("imageprofile", UserData.userImage());
-        model.addAttribute("post", new Post());
-        model.addAttribute("users",userRepository.findAll());
         return "/view/mainpage";
     }
 }
