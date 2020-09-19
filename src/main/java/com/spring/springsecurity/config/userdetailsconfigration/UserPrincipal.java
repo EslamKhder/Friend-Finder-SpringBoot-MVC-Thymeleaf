@@ -60,7 +60,6 @@ public class UserPrincipal implements UserDetails {
         } catch (Exception e){
             return false;
         }
-
     }
     public String getFullname(){
         return this.user.getFullname();

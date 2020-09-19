@@ -190,7 +190,7 @@
                                 <p class="text-muted">Published a photo about 3 mins ago</p>
                             </div>
                             <div class="reaction">
-                                <a href="/login" class="btn text-green" th:text="${po.love}"><i class="icon ion-thumbsup"></i></a>
+                                <a href="/login" class="btn text-green" th:text="${po.love}"></a><i class="icon ion-thumbsup"></i>
                             </div>
                             <div class="line-divider"></div>
                             <div class="post-text">
@@ -226,7 +226,7 @@
                                 <p class="text-muted">Published a photo about 3 mins ago</p>
                             </div>
                             <div class="reaction">
-                                <a th:onclick="|sendLike(${po.id})|" th:id="|likes${po.id}|" class="btn text-green" th:text="${po.love}"><i class="icon ion-thumbsup"></i></a>
+                                <a th:onclick="|sendLike(${po.id})|" th:id="|likes${po.id}|" class="btn text-green" th:text="${po.love}"></a><i class="icon ion-thumbsup"></i>
                             </div>
                             <div class="line-divider"></div>
                             <div class="post-text">

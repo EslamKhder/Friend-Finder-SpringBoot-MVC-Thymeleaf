@@ -2,6 +2,7 @@ package com.spring.springsecurity.config;
 
 
 import com.spring.springsecurity.config.userdetailsconfigration.UserPrincipalDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,6 +20,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private UserPrincipalDetailsService userPrincipalDetailsService;
 
+	@Autowired
 	public DemoSecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService) {
 		this.userPrincipalDetailsService = userPrincipalDetailsService;
 	}
@@ -27,39 +29,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) {
 		auth.authenticationProvider(authenticationProvider());
 	}
-
-/*	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-		// use jdbc authentication ... oh yeah!!!
-		
-		auth.jdbcAuthentication().dataSource(securityDataSource);
-		
-	}
-
- */
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
-		/*http
-		.csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-		// add jwt filters (1. authentication, 2. authorization)
-		.addFilter(new JwtAuthenticationFilter(authenticationManager()))
-		.addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.userRepository))
-		.authorizeRequests()
-		.antMatchers("/index").permitAll()
-		.and()
-		.formLogin()
-		.loginProcessingUrl("/signin")
-		.loginPage("/userlogin").permitAll()
-		.usernameParameter("txtusername")
-		.passwordParameter("txtpassword")
-		.and()
-		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/userlogin");
-		*/
 		http.authorizeRequests()
 		.antMatchers("/home").permitAll()
 		.and()
