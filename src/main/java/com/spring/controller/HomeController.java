@@ -47,8 +47,8 @@ public class HomeController {
 
     @GetMapping("/home")
     public String showMyPage(Model model) {
-        posts = postRepository.findAll();
-        users = userRepository.findAll();
+        posts = (List<Post>) postRepository.findAll();
+        users = (List<User>) userRepository.findAll();
 
         if(UserData.isConnected()){
 

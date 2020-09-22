@@ -1,11 +1,11 @@
 package com.spring.dao;
 import com.spring.model.Friend;
 import com.spring.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface FriendRepository extends JpaRepository<Friend,Long> {
+public interface FriendRepository extends CrudRepository<Friend,Long> {
 
-    public List<Friend> findByUser(User user);
+    List<Friend> findByUser(User user);
 }
