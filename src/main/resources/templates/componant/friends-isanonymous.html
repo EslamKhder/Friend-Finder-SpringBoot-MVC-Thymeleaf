@@ -1,0 +1,17 @@
+<!-- Newsfeed Common Side Bar Right ---- isAnonymous
+            ================================================= -->
+<div sec:authorize="isAnonymous()" class="col-md-2 static friendano">
+    <div class="suggestions" id="sticky-sidebar">
+        <h4 class="grey">Who to Follow</h4>
+        <div class="follow-user" th:each="us : ${users}">
+                    <span th:switch="${us.image} != null">
+                        <img th:case="true" th:src="@{'~/photos/' + ${us.image}}" alt="user" class="profile-photo-md pull-left" />
+                        <img th:case="false" src="photos/default.jpg" alt="user" class="profile-photo-md pull-left" />
+                    </span>
+            <div>
+                <h5><a href="/login" th:text="${us.fullname}"></a></h5>
+                <a href="/login" class="text-green">Follow</a>
+            </div>
+        </div>
+    </div>
+</div>

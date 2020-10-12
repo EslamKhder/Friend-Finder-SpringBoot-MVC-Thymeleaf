@@ -1,0 +1,35 @@
+<!-- Post Content isAnonymous
+                ================================================= -->
+<div sec:authorize="isAnonymous()" class="post-content" th:each="po : ${posts}">
+    <div th:switch="${po.image} != null">
+        <img th:case="true" th:src="@{'~/photos/' + ${po.image}}" alt="post-image" class="img-responsive post-image" />
+    </div>
+    <div class="post-container">
+        <div th:switch="${po.user.image} != null">
+            <img th:case="true" th:src="@{'~/photos/' + ${po.user.image}}" alt="user" class="profile-photo-md pull-left" />
+            <img th:case="false" src="photos/default.jpg" alt="user" class="profile-photo-md pull-left" />
+        </div>
+        <div class="post-detail">
+            <div class="user-info">
+                <h5><a href="/login" th:text="${po.user.fullname}" class="profile-link"></a> <span class="following">following</span></h5>
+                <p class="text-muted">Published a photo about 3 mins ago</p>
+            </div>
+            <div class="reaction">
+                <a href="/login" class="btn text-green" th:text="${po.love}"></a><i class="icon ion-thumbsup"></i>
+            </div>
+            <div class="line-divider"></div>
+            <div class="post-text">
+                <p th:text="${po.text}"></p>
+            </div>
+            <div class="line-divider"></div>
+            <div class="commentst" th:each="com : ${comments}"  th:switch="${com.post.id == po.id}" th:case="true" >
+                <div th:switch="${com.user.image} != null">
+                    <img th:case="true" th:src="@{'~/photos/' + ${com.user.image}}" alt="" class="profile-photo-sm" />
+                    <img th:case="false" src="photos/default.jpg" alt="" class="profile-photo-sm" />
+                    <a th:text="${com.user.fullname}" href="/login" class="profile-link"></a>
+                    <span class="" th:text="${com.text}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
